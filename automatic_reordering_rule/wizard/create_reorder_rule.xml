@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+        <record id="create_reorder_rule_id_id" model="ir.ui.view">
+            <field name="name">create.reorder.rule</field>
+            <field name="model">create.reorder.rule</field>
+            <field name="arch" type="xml">
+                <form string="Create Reorder Rule per Product or Category">
+                	 <p>
+	              		<b> Select Product Or Categories For Creating Reorder Rule :</b> 
+	             	 </p>
+                       	<group>
+                			<field name="product_bool" string="Products" attrs="{'invisible':[('category_bool','!=',False)]}"/>
+
+                			  <field name="category_bool" string="Category" attrs="{'invisible':[('product_bool','!=',False)]}"/>
+                	    </group>
+                    <group>
+                        <field name="category_id" string="Select Category"  colspan="2" attrs="{'invisible':[('category_bool','!=',True)]}"/>
+                    	<field name="product_ids" string="Select Products" widget="many2many_tags" attrs="{'invisible':[('product_bool','!=',True)]}"/>
+
+                    </group>
+                    <group>
+                        <field name="qty_update"/>
+                        <field name="min_qty" attrs="{'invisible':[('qty_update','=',False)]}"/>
+                        <field name="max_qty" attrs="{'invisible':[('qty_update','=',False)]}"/>
+                        <field name="qty_multiple" attrs="{'invisible':[('qty_update','=',False)]}"/>
+                    </group>
+                    <group>
+                    	<field name="done" invisible="1"/>
+                    	<label for="done" string="Reorder Rules Created" attrs="{'invisible':[('done','!=',True)]}"/>
+                    </group>
+                    <footer>
+                        <button string="Create" name="create_reorder_rules" type="object" class="oe_highlight" attrs="{'invisible':[('done','!=',False)]}"/>
+                       <b attrs="{'invisible':[('done','!=',False)]}">
+                        or
+                        </b>
+                        <button string="Cancel" class="oe_link" special="cancel" attrs="{'invisible':[('done','!=',False)]}"/>
+                        <button string="Close" class="oe_link" special="cancel" attrs="{'invisible':[('done','!=',True)]}"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+
+        <act_window name="Create Reorder Rules"
+                res_model="create.reorder.rule"
+                src_model="product.template"
+                view_mode="form"
+                multi="True"
+                target="new"
+                key2="client_action_multi"
+                id="create_reorder_rule_id"/>
+    </data>
+</openerp>
